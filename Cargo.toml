@@ -6,7 +6,11 @@ edition = "2021"
 [dependencies]
 base64 = "0.22.1"
 config = "0.15.11"
-log = "0.4.27"
-reqwest = "0.12.15"
+ctrlc = "3.4.6"
+env_logger = "0.11.8"
+log = "0.4"
+regex = "1.11.1"
+reqwest = { version = "0.12.15", features = ["json"] }
 serde = "1.0.219"
-tokio = "1.44.1"
+tokio = { version = "1.44.1", features = ["rt", "rt-multi-thread"] }
+urlencoding = "2.1.3"

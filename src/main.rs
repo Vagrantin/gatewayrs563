@@ -1,16 +1,19 @@
 // DavMail Rust Implementation
 // A POP/IMAP/SMTP/CalDav/CardDav/LDAP gateway for Microsoft Exchange/Office 365
 
+//use crate::imap::ImapServer;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use tokio::runtime::Runtime;
-use log::{info, error, warn, debug};
+use log::{info, error };
 use config::{Config, File, Environment};
+use ctrlc;
 
-mod config;
+mod configuration;
 mod exchange;
 mod protocols;
-mod utils;
+//mod imap;
+//mod utils;
 mod auth;
 
 // Main application structure
@@ -62,11 +65,13 @@ impl DavMailRust {
     }
     
     fn start_protocol_servers(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+   /* 
         // Start POP3 server if enabled
         if self.config.get_bool("davmail.popEnabled").unwrap_or(false) {
             let port = self.config.get_int("davmail.popPort").unwrap_or(1110);
             self.start_pop_server(port as u16)?;
         }
+  */
         
         // Start IMAP server if enabled
         if self.config.get_bool("davmail.imapEnabled").unwrap_or(false) {
@@ -74,27 +79,34 @@ impl DavMailRust {
             self.start_imap_server(port as u16)?;
         }
         
+   /* 
         // Start SMTP server if enabled
         if self.config.get_bool("davmail.smtpEnabled").unwrap_or(false) {
             let port = self.config.get_int("davmail.smtpPort").unwrap_or(1025);
             self.start_smtp_server(port as u16)?;
         }
+  */
         
+   /* 
         // Start CalDAV server if enabled
         if self.config.get_bool("davmail.caldavEnabled").unwrap_or(false) {
             let port = self.config.get_int("davmail.caldavPort").unwrap_or(1080);
             self.start_caldav_server(port as u16)?;
         }
+  */
         
+   /* 
         // Start LDAP server if enabled
         if self.config.get_bool("davmail.ldapEnabled").unwrap_or(false) {
             let port = self.config.get_int("davmail.ldapPort").unwrap_or(1389);
             self.start_ldap_server(port as u16)?;
         }
+  */
         
         Ok(())
     }
-    
+   // We don't use this pop server for now let's focus on IMAP first 
+   /* 
     fn start_pop_server(&mut self, port: u16) -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting POP3 server on port {}", port);
         let config = self.config.clone();
@@ -114,7 +126,8 @@ impl DavMailRust {
         
         Ok(())
     }
-    
+   */ 
+
     fn start_imap_server(&mut self, port: u16) -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting IMAP server on port {}", port);
         let config = self.config.clone();
@@ -135,6 +148,8 @@ impl DavMailRust {
         Ok(())
     }
     
+   // We don't use this pop server for now let's focus on IMAP first 
+   /*
     fn start_smtp_server(&mut self, port: u16) -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting SMTP server on port {}", port);
         let config = self.config.clone();
@@ -154,7 +169,10 @@ impl DavMailRust {
         
         Ok(())
     }
+    */
     
+   // We don't use this pop server for now let's focus on IMAP first 
+   /*
     fn start_caldav_server(&mut self, port: u16) -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting CalDAV server on port {}", port);
         let config = self.config.clone();
@@ -174,7 +192,10 @@ impl DavMailRust {
         
         Ok(())
     }
+    */
     
+   // We don't use this pop server for now let's focus on IMAP first 
+   /*
     fn start_ldap_server(&mut self, port: u16) -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting LDAP server on port {}", port);
         let config = self.config.clone();
@@ -194,6 +215,7 @@ impl DavMailRust {
         
         Ok(())
     }
+    */
     
     pub fn shutdown(&mut self) {
         info!("Shutting down DavMail Rust...");

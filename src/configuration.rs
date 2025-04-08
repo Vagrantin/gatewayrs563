@@ -1,4 +1,4 @@
-// config.rs
+// configuration.rs
 // Configuration module for DavMail Rust
 
 use std::fs::File;

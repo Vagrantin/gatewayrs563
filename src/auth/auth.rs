@@ -9,11 +9,6 @@ pub struct Credentials {
     pub password: String,
 }
 
-impl Credentials {
-    pub fn new(username: String, password: String) -> Self {
-        Credentials { username, password }
-    }
-}
 
 // Don't print the password in debug output
 impl fmt::Debug for Credentials {
